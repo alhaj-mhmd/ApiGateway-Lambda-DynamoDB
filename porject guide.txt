@@ -1,0 +1,32 @@
+dynamo db
+plicy and role for lambda
+lambda func
+api gateway and deploy
+testing
+
+https://60qac2cwoj.execute-api.us-east-2.amazonaws.com/Dev
+post
+body
+raw, json
+{"id":"14",
+"name":"hani"}
+
+js lambda:
+
+'use strict';
+
+var AWS = require('aws-sdk'),
+	documentClient = new AWS.DynamoDB.DocumentClient(); 
+
+exports.handler = function createUser (event, context, callback){
+	var params = {
+		Item : {
+			"id" : event.id,
+			"name" : event.name
+		},
+		TableName : 'ApiGateway-Lambda-DynamoDB'
+	};
+	documentClient.put(params, function(err, data){
+		callback(err, data);
+	});
+}
